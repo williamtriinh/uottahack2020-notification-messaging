@@ -19,14 +19,18 @@ const FirebaseApp = firebaseAdmin.initializeApp({
 const fcm = FirebaseApp.messaging();
 
 let notifyUser = (data) => {
+    users[data.id+""] = setInterval(() => {
+        notifyUser(req.body);
+    }, 86400000);
+
     const message = {
         notification: {
-            title: "Time to take your " + drug,
+            title: "Time to take your " + data.drug,
             body: ""
         },
     };
 
-    fcm.sendToDevice(token, message).then((res) => {
+    fcm.sendToDevice(data.token, message).then((res) => {
         console.log(res);
     }).catch((error) => {
         console.log(error);
